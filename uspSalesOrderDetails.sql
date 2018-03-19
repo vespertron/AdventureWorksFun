@@ -25,7 +25,7 @@ AS
   SET @BeginDate DATE = ISNULL(@BeginDate, GETDATE())
   SET @EndDate DATE = ISNULL(@EndDate, GETDATE())
   
-	SELECT top 100
+SELECT top 100
   SH.SalesOrderID
   ,SH.RevisionNumber
   ,SH.OrderDate
