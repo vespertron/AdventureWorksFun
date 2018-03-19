@@ -4,7 +4,7 @@ GO
 CREATE PROCEDURE dbo.SalesOrderDetails
 AS
 SELECT top 100
-  SH.SalesOrderID
+  SalesOrderID
   ,RevisionNumber
   ,OrderDate
   ,Status AS OrderStatusText
@@ -22,8 +22,8 @@ SELECT top 100
   ,PostalCode AS ShipToZip
   ,CountryRegionCode AS ShipToCountryCode
   ,CountryRegionName AS ShipToCountryName
-  ,ProductModel.Name AS ModelName
-  ,ProductCategory.Name AS CategoryName
+  ,PM.Name AS ModelName
+  ,PC.Name AS CategoryName
 FROM Sales.SalesOrderHeader SH
   LEFT OUTER JOIN Sales.SalesOrderDetail SD ON OH.SalesOrderID = SD.SalesOrderID
   LEFT OUTER JOIN Person.Address PA ON SH.ShipToAddressID = PA.AddressID
