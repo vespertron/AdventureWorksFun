@@ -1,16 +1,31 @@
 USE AdventureWorks
 GO
 
+==============================================
+-- Drop stored procedure if it already exists.
+==============================================
+IF EXISTS (
+  SELECT * 
+    FROM INFORMATION_SCHEMA.ROUTINES 
+   WHERE SPECIFIC_SCHEMA = N'dbo'
+     AND SPECIFIC_NAME = N'SalesOrderDetails'
+)
+   DROP PROCEDURE dbo.SalesOrderDetails
+GO
+
+==========================
+-- Create stored procedure
+==========================
 CREATE PROCEDURE dbo.SalesOrderDetails
-  /* Input Parameters set to NULL so procedure will run even if user defines no dates */
+-- Set input param defaults so that proc executes with or without user input
   @BeginDate DATE = NULL
   @EndDate DATE = NULL
 AS
-  SET NOCOUNT ON
-  /* User defines input parameters */
+-- User can edit input params
   SET @BeginDate DATE = ISNULL(@BeginDate, GETDATE())
   SET @EndDate DATE = ISNULL(@EndDate, GETDATE())
-SELECT top 100
+  
+	SELECT top 100
   SH.SalesOrderID
   ,SH.RevisionNumber
   ,SH.OrderDate
@@ -20,6 +35,7 @@ SELECT top 100
   ,SH.TaxAmt
   ,SH.Freight
   ,SD.TotalDue
+-- convert INT to STRING with 4 characters
   ,RIGHT('000' + CONVERT(VARCHAR(4), SD.OrderQty),4) AS OrderQtyText
   ,PP.UnitPrice
   ,PP.UnitPriceDiscount
@@ -31,15 +47,22 @@ SELECT top 100
   ,PSC.CountryRegionName AS ShipToCountryName
   ,PM.Name AS ModelName
   ,PC.Name AS CategoryName
-FROM Sales.SalesOrderHeader SH
-  LEFT OUTER JOIN Sales.SalesOrderDetail SD ON OH.SalesOrderID = SD.SalesOrderID
-  LEFT OUTER JOIN Person.Address PA ON SH.ShipToAddressID = PA.AddressID
-  LEFT OUTER JOIN Person.vStateProvinceCountryRegion PSC ON PA.StateProvinceID = PSC.StateProvinceID
-  LEFT OUTER JOIN Production.Product PP ON SD.ProductID = PP.ProductID
-  LEFT OUTER JOIN Production.ProductModel PM ON PP.ProductModelID = PM.ProductModelID
-  LEFT OUTER JOIN Production.ProductSubcategory PS ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
-  LEFT OUTER JOIN Production.ProductCategory PC ON PS.ProductCategoryID = PC.ProductCategoryID
-/* Input parameters */
-WHERE SH.OrderDate BETWEEN @BeginDate AND @EndDate
-ORDER BY SalesOrderNumber
+  FROM Sales.SalesOrderHeader SH
+    LEFT OUTER JOIN Sales.SalesOrderDetail SD ON OH.SalesOrderID = SD.SalesOrderID
+    LEFT OUTER JOIN Person.Address PA ON SH.ShipToAddressID = PA.AddressID
+    LEFT OUTER JOIN Person.vStateProvinceCountryRegion PSC ON PA.StateProvinceID = PSC.StateProvinceID
+    LEFT OUTER JOIN Production.Product PP ON SD.ProductID = PP.ProductID
+    LEFT OUTER JOIN Production.ProductModel PM ON PP.ProductModelID = PM.ProductModelID
+    LEFT OUTER JOIN Production.ProductSubcategory PS ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
+    LEFT OUTER JOIN Production.ProductCategory PC ON PS.ProductCategoryID = PC.ProductCategoryID
+-- Input parameters
+  WHERE SH.OrderDate BETWEEN @BeginDate AND @EndDate
+  ORDER BY SalesOrderNumber
+GO
+
+-- 
+============================
+-- Execute stored procedure.
+============================
+EXECUTE dbo.SalesOrderDetails @BeginDate = '', @EndDate = ''
 GO
