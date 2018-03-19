@@ -4,7 +4,7 @@ GO
 CREATE PROCEDURE dbo.SalesOrderDetails
 AS
 SELECT top 100
-  SalesOrderHeader.SalesOrderID
+  SH.SalesOrderID
   ,RevisionNumber
   ,OrderDate
   ,Status AS OrderStatusText
@@ -13,7 +13,7 @@ SELECT top 100
   ,TaxAmt
   ,Freight
   ,TotalDue
-  ,RIGHT('000' + CONVERT(VARCHAR(4),OrderQty),4) AS OrderQtyText --Convert Sales.SalesOrderDetails.OrderQty to 4 characters wide
+  ,RIGHT('000' + CONVERT(VARCHAR(4), SD.OrderQty),4) AS OrderQtyText
   ,UnitPrice
   ,UnitPriceDiscount
   ,LineTotal
@@ -24,13 +24,13 @@ SELECT top 100
   ,CountryRegionName AS ShipToCountryName
   ,ProductModel.Name AS ModelName
   ,ProductCategory.Name AS CategoryName
-FROM Sales.SalesOrderHeader
-  LEFT OUTER JOIN Sales.SalesOrderDetail ON SalesOrderHeader.SalesOrderID=SalesOrderDetail.SalesOrderID
-  LEFT OUTER JOIN Person.Address ON Sales.SalesOrderHeader.ShipToAddressID=Person.Address.AddressID
-  LEFT OUTER JOIN Person.vStateProvinceCountryRegion ON Person.Address.StateProvinceID=vStateProvinceCountryRegion.StateProvinceID
-  LEFT OUTER JOIN Production.Product ON Sales.SalesOrderDetail.ProductID=Production.Product.ProductID
-  LEFT OUTER JOIN Production.ProductModel ON Production.Product.ProductModelID=Production.ProductModel.ProductModelID
-  LEFT OUTER JOIN Production.ProductSubcategory ON Production.Product.ProductSubcategoryID=Production.ProductSubcategory.ProductSubcategoryID
-  LEFT OUTER JOIN Production.ProductCategory ON Production.ProductSubcategory.ProductCategoryID=Production.ProductCategory.ProductCategoryID
+FROM Sales.SalesOrderHeader SH
+  LEFT OUTER JOIN Sales.SalesOrderDetail SD ON OH.SalesOrderID = SD.SalesOrderID
+  LEFT OUTER JOIN Person.Address PA ON SH.ShipToAddressID = PA.AddressID
+  LEFT OUTER JOIN Person.vStateProvinceCountryRegion PSC ON PA.StateProvinceID=PSC.StateProvinceID
+  LEFT OUTER JOIN Production.Product PP ON SD.ProductID = PP.ProductID
+  LEFT OUTER JOIN Production.ProductModel PM ON PP.ProductModelID = PM.ProductModelID
+  LEFT OUTER JOIN Production.ProductSubcategory PS ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
+  LEFT OUTER JOIN Production.ProductCategory PC ON PS.ProductCategoryID = PC.ProductCategoryID
 ORDER BY SalesOrderNumber
 GO
