@@ -27,7 +27,7 @@ SELECT top 100
 FROM Sales.SalesOrderHeader SH
   LEFT OUTER JOIN Sales.SalesOrderDetail SD ON OH.SalesOrderID = SD.SalesOrderID
   LEFT OUTER JOIN Person.Address PA ON SH.ShipToAddressID = PA.AddressID
-  LEFT OUTER JOIN Person.vStateProvinceCountryRegion PSC ON PA.StateProvinceID=PSC.StateProvinceID
+  LEFT OUTER JOIN Person.vStateProvinceCountryRegion PSC ON PA.StateProvinceID = PSC.StateProvinceID
   LEFT OUTER JOIN Production.Product PP ON SD.ProductID = PP.ProductID
   LEFT OUTER JOIN Production.ProductModel PM ON PP.ProductModelID = PM.ProductModelID
   LEFT OUTER JOIN Production.ProductSubcategory PS ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
