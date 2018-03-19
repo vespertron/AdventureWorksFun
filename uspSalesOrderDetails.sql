@@ -4,24 +4,24 @@ GO
 CREATE PROCEDURE dbo.SalesOrderDetails
 AS
 SELECT top 100
-  SalesOrderID
-  ,RevisionNumber
-  ,OrderDate
-  ,Status AS OrderStatusText
-  ,SalesOrderNumber
-  ,SubTotal
-  ,TaxAmt
-  ,Freight
-  ,TotalDue
+  SH.SalesOrderID
+  ,SH.RevisionNumber
+  ,SH.OrderDate
+  ,SH.Status AS OrderStatusText
+  ,SH.SalesOrderNumber
+  ,SH.SubTotal
+  ,SH.TaxAmt
+  ,SH.Freight
+  ,SD.TotalDue
   ,RIGHT('000' + CONVERT(VARCHAR(4), SD.OrderQty),4) AS OrderQtyText
-  ,UnitPrice
-  ,UnitPriceDiscount
-  ,LineTotal
-  ,City AS ShipToCity
-  ,StateProvinceCode AS ShipToState
-  ,PostalCode AS ShipToZip
-  ,CountryRegionCode AS ShipToCountryCode
-  ,CountryRegionName AS ShipToCountryName
+  ,PP.UnitPrice
+  ,PP.UnitPriceDiscount
+  ,SD.LineTotal
+  ,PA.City AS ShipToCity
+  ,PA.StateProvinceCode AS ShipToState
+  ,PA.PostalCode AS ShipToZip
+  ,PSC.CountryRegionCode AS ShipToCountryCode
+  ,PSC.CountryRegionName AS ShipToCountryName
   ,PM.Name AS ModelName
   ,PC.Name AS CategoryName
 FROM Sales.SalesOrderHeader SH
