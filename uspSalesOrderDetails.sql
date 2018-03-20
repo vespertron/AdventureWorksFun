@@ -57,5 +57,5 @@ GO
 
 
 -- Execute stored procedure with or without input parameter entry
-EXECUTE dbo.SalesOrderDetails @BeginDate = '2/1/2008', @EndDate = '2/14/2017'
+EXECUTE dbo.SalesOrderDetails @BeginDate = '', @EndDate = ''
 GO
