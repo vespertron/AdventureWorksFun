@@ -42,14 +42,22 @@ BEGIN
       ,PM.Name AS ModelName
       ,PC.Name AS CategoryName
     FROM Sales.SalesOrderHeader SH
-      INNER JOIN Sales.SalesOrderStatus SS ON SH.Status = SS.StatusID
-      INNER JOIN Sales.SalesOrderDetail SD ON SH.SalesOrderID = SD.SalesOrderID
-      INNER JOIN Person.Address PA ON SH.ShipToAddressID = PA.AddressID
-      INNER JOIN Person.vStateProvinceCountryRegion PSC ON PA.StateProvinceID = PSC.StateProvinceID
-      INNER JOIN Production.Product PP ON SD.ProductID = PP.ProductID
-      INNER JOIN Production.ProductModel PM ON PP.ProductModelID = PM.ProductModelID
-      INNER JOIN Production.ProductSubcategory PS ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
-      INNER JOIN Production.ProductCategory PC ON PS.ProductCategoryID = PC.ProductCategoryID
+      INNER JOIN Sales.SalesOrderStatus SS
+      	ON SH.Status = SS.StatusID
+      INNER JOIN Sales.SalesOrderDetail SD
+      	ON SH.SalesOrderID = SD.SalesOrderID
+      INNER JOIN Person.Address PA
+      	ON SH.ShipToAddressID = PA.AddressID
+      INNER JOIN Person.vStateProvinceCountryRegion PSC
+      	ON PA.StateProvinceID = PSC.StateProvinceID
+      INNER JOIN Production.Product PP
+      	ON SD.ProductID = PP.ProductID
+      INNER JOIN Production.ProductModel PM
+      	ON PP.ProductModelID = PM.ProductModelID
+      INNER JOIN Production.ProductSubcategory PS
+      	ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
+      INNER JOIN Production.ProductCategory PC
+      	ON PS.ProductCategoryID = PC.ProductCategoryID
     WHERE SH.OrderDate BETWEEN @BeginDate AND @EndDate
     ORDER BY SalesOrderNumber
 END
