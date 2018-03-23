@@ -1,28 +1,15 @@
-USE AdventureWorks
+USE BREAKFAST
 GO
 
-==============================================
--- Drop stored procedure if it already exists.
-==============================================
-IF EXISTS (
-  SELECT * 
-    FROM INFORMATION_SCHEMA.ROUTINES 
-   WHERE SPECIFIC_SCHEMA = N'dbo'
-     AND SPECIFIC_NAME = N'XMLFun'
+CREATE TABLE BreakfastMenu
+(
+Id INT IDENTITY PRIMARY KEY,
+XMLData XML,
+LoadedDateTime DATETIME
 )
-   DROP PROCEDURE dbo.XMLFun
-GO
 
-==========================
--- Create stored procedure
-==========================
-CREATE PROCEDURE dbo.XMLFun
-AS
+INSERT INTO BreakfastMenu(XMLData, LoadedDateTime)
+SELECT CONVERT(XML, BulkColumn) AS BulkColumn, GETDATE()
+FROM OPENROWSET(BULK 'C:\users\vespe\projects\BreakfastMenu.xml', SINGLE_BLOB) AS x;
 
-GO
-
-============================
--- Execute stored procedure.
-============================
-EXECUTE dbo.XMLFun
-GO
+SELECT * FROM BreakfastMenu
