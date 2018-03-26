@@ -3,6 +3,9 @@
 This is a collection of T-SQL stored procedures using the Microsoft AdventureWorks database https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks.
 If you have any suggestions to improve this code, I'd love your feedback!
 
+## mergeProductVendor.sql
+  This script is to merge a new Purchasing.ProductVendorTarget table to the Purchasing.ProductVendor source after the new table is created.
+
 ## uspSalesOrderDetails.sql
   This stored procedure selects Sales Order Details between input parameters Begin Date and End Date.
   
