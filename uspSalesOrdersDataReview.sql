@@ -18,6 +18,5 @@ AS
   ,SubTotal
 GO
 
--- Execute stored procedure.
-EXECUTE dbo.SalesOrdersDataReview
+EXEC dbo.SalesOrdersDataReview
 GO

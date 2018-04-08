@@ -1,6 +1,6 @@
-USE [AdventureWorks]
+USE AdventureWorks
 GO
-/****** Object:  StoredProcedure [dbo].[SalesOrderDetails]    Script Date: 3/20/2018 9:23:49 AM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -12,8 +12,6 @@ ALTER PROCEDURE [dbo].[SalesOrderDetails]
     @EndDate DATE = NULL
 AS
 BEGIN
-	/* SET NOCOUNT ON added to prevent extra result sets from
-	interfering with SELECT statements. */
 	SET NOCOUNT ON;
 
 	SET @BeginDate = ISNULL(@BeginDate, GETDATE())
@@ -62,5 +60,5 @@ BEGIN
     ORDER BY SalesOrderNumber
 END
 
-EXECUTE dbo.SalesOrderDetails @BeginDate = '', @EndDate = ''
+EXEC dbo.SalesOrderDetails @BeginDate = '', @EndDate = ''
 GO
