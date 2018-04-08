@@ -58,7 +58,7 @@ THEN
 WHEN NOT MATCHED BY SOURCE 
 THEN DELETE
 OUTPUT	$action AS MergeAction
-		,deleted.*
+	,deleted.*
 INTO @MergeLog;
 
 
