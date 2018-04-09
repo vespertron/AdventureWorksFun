@@ -1,11 +1,8 @@
 /* They need help directing their sales efforts to go after areas that are showing sales growth.
-		- Demographics
-		- Territory - 
-		- Sales Person - Change in sales
-		- Sales Branch - What is the highest selling branch?
+		- Territory
+		- Person - Change in sales
+		- Branch
 		- Product - What are the 3 highest selling products in 2014?
-
-		LIKE - 
 */
 
 
@@ -16,27 +13,45 @@ CREATE PROC SQLDrills
 AS
 BEGIN
 	SET NOCOUNT ON;
-
-
+	
 	-- LIKE operator
-
+	SELECT *
+	FROM Sales.SalesOrderHeader
+		JOIN 
+	WHERE CustomerName LIKE 'J%s'
 
 	-- HAVING clause
-
+	SELECT
+		 DeptID
+		,SUM(SalesAmount)
+	FROM Sales
+	WHERE SalesDate = 'ddmmyyyy'
+	GROUP BY DeptID
+	HAVING SUM(SalesAmount) > 1000
 
 	-- looping without cursors
 
 
 	-- DISTINCT operator
+	SELECT DISTINCT Country
+	FROM Supplier
+	ORDER BY Country
 
-
-	-- TEMP TABLES
+	-- temp tables
 	
 
-	-- TABLE VARIABLES
+	-- table variables
 
 
 	-- EXISTS
+	SELECT *
+	FROM Orders
+	WHERE NOT EXISTS
+		(
+		SELECT *
+		FROM Orders
+		Customer.Customer_ID = orders.customer_id
+		);
 
 
 END
