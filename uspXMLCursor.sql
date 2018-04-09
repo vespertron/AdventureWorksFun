@@ -32,7 +32,7 @@ BEGIN
 			Name nvarchar(30),
 			ListPrice nvarchar(30)
 		)
-
+		
 
 		-- create dynamic sql query
 		SET @dynamic = N'
