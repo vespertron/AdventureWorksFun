@@ -1,3 +1,12 @@
+/*	TEST QUESTION 10
+
+		Create a stored procedure that has no parameters called [dbo].[SalesByYearBySalesperson].
+		Have it return the sales numbers by sales person by year (the year being on the column). 
+		This will provide an example to understand and explain how pivot/unpivot works in TSQL.
+
+*/
+
+
 Use AdventureWorks
 GO
 
@@ -11,7 +20,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	--Return sales by sales person by year: (Existing vSalesPersonSalesByFiscalYear did most of my work for me, so I'll include addt'l insights below this one)
+	--	Return sales by sales person by year: (Existing vSalesPersonSalesByFiscalYear did most of my work for me, so I'll include addt'l insights below this one)
 	SELECT
 		 pvt.[SalesPersonID]
 		,pvt.[FullName]
@@ -46,7 +55,7 @@ BEGIN
 		) AS pvt;
 	
 		
-	--Return sales by territory and # sales people by year:
+	--	Return sales by territory and # sales people by year:
 /*	SELECT
 		*
 	FROM
@@ -86,7 +95,7 @@ BEGIN
 			FROM (VALUES ([2011]), ([2012]), ([2013]), ([2014])) q(V)) q;		--This isn't accurate. Need to review.
 */	
 
-	--Unpivot year, then pivot territory:			--Will come back to this later
+	--	Unpivot year, then pivot territory:			--Will come back to this later
 /*	SELECT
 		 FiscalYear
 		,[Australia]
