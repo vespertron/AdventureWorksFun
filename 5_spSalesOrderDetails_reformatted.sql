@@ -6,9 +6,10 @@
 		important elements of your code.  When joining tables, please always use table aliases 
 		like shown below (t1, t2, t3) that represent the table clearly.  Use short alias names
 		that are clearly understood.
-*/
 
-/*
+
+	GENERAL COMMENTS
+
 		Instead of table aliases t1, t2, t3, I used table acronyms
 		so they'd be easier to identify.
 
@@ -57,5 +58,4 @@ FROM Sales.SalesOrderHeader SH
 		ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
 	INNER JOIN Production.ProductCategory PC
 		ON PS.ProductCategoryID = PC.ProductCategoryID
-WHERE SH.OrderDate BETWEEN @BeginDate AND @EndDate
 ORDER BY SalesOrderNumber;

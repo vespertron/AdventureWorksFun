@@ -1,17 +1,35 @@
+/*	TEST QUESTION 8
+
+		Create a new stored procedure called [dbo].[XMLFun].
+		 
+			a.	Demonstrate in this stored procedure how XML can be converted to a temp table
+
+			b.	Use the xml in the same folder as these instructions.  Look for XML_BreakfastMenu.
+
+			c.	Be sure to make columns for all elements plus the id attribute for food.
+
+			d.	After you have demonstrated how to parse xml into a data table,
+				then show how you can create XML from that table to look like the original XML using the FOR XML syntax.
+
+			e.	Then show how FOR XML can be used with the stuff function to convert a list of a single column
+				to a comma separated value.
+
+*/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
 CREATE PROCEDURE	dbo.XMLFun
 AS
 BEGIN
 	SET NOCOUNT ON;
 
 	/* Insert XML into temp table */
+	/* Learning material: https://www.udemy.com/ms-sql-server-t-sql-concepts-raise-above-beginner-level/learn/v4/t/lecture/9512528?start=0 */
 	DECLARE	@Breakfast XML
 		SET	@Breakfast = 
-					'<?xml version="1.0" encoding="UTF-8"?>
+					'<?xml version="1.0" encoding="UTF-8"?>			
 						<breakfast_menu>
 							<food id="1">
 								<name>Belgian Waffles</name>
@@ -58,6 +76,7 @@ BEGIN
 
 
 	/* Convert to XML */
+	/*	Learning material: https://www.udemy.com/ms-sql-server-t-sql-concepts-raise-above-beginner-level/learn/v4/t/lecture/9513076?start=0 */
 	DECLARE @xml NVARCHAR(MAX)
 		SET @xml = (
 					SELECT	
@@ -73,6 +92,7 @@ BEGIN
 
 
 	/* Convert a list of a single column to a comma separated value */
+	/* Adapted from: https://stackoverflow.com/questions/21760969/multiple-rows-to-one-comma-separated-value?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
 	SELECT Stuffed = STUFF((
 							SELECT
 								', ' + NAME

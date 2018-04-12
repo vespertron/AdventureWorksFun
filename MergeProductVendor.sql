@@ -1,3 +1,20 @@
+/*	MERGE QUESTION
+
+	Below are links about the TSQL Merge statement. We often use that to update data with Interject.  
+	Elliott would like to see how well you can employ a merge in the Adventure works database to update a table.  
+	An approach I would suggest is to copy a table into a new table, change the data slightly, remove a record, 
+	and then merge one with the other so they are the same at the end.
+
+	I just found a few links to help describe the merge to help you get started.
+ 
+	https://www.essentialsql.com/introduction-merge-statement/ 
+	https://sqlsunday.com/2013/03/17/using-merge/ 
+	https://sqlsunday.com/2013/08/04/cool-merge-features/ 
+	http://www.made2mentor.com/2013/05/writing-t-sql-merge-statements-the-right-way/ 
+
+*/
+
+
 /*** CREATE TABLE COPY USING SSMS GUI ***/
 --https://docs.microsoft.com/en-us/sql/relational-databases/tables/duplicate-tables
 
@@ -39,6 +56,7 @@ DECLARE @MergeLog TABLE
 
 
 /*** MERGE ***/
+/*	Learning material: http://www.made2mentor.com/2013/06/using-the-output-clause-with-t-sql-merge/	*/
 MERGE	Purchasing.ProductVendorTarget T
 USING	Purchasing.ProductVendor S
 	ON	T.ProductID = S.ProductID
